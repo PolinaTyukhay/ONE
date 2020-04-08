@@ -2,6 +2,7 @@
 #include <malloc.h>
 #include <windows.h>
 #include <locale.h>
+#include <stdlib.h>
 
 typedef struct
 {
@@ -133,8 +134,18 @@ void JustScan(Matrix w)
 		}
 	}
 }
+void Random(Matrix r)
+{
+	for (int i = 0; i < r.r; i++)
+	{
+		for (int j = 0; j < r.c; j++)
+		{
+			r.matr[i][j]= 1 + rand() % 100;
+		}
+	}
+}
 
-int main()
+int main()  
 {
 	setlocale(LC_ALL, "rus");
 	int i, j;
@@ -156,20 +167,33 @@ int main()
 	if (emp == 0)
 	{
 		exit(1);
-	}*/
+	}
+	MallocForAll(&M.matr, M.r, M.c);*/
 	//для ручного ввода 
-	int razm;
+	/*int razm;
 	printf("введите порядок матрицы \n");
 	scanf_s("%d", &M.r);
-	MallocForAll(&M.matr, M.r, M.c);
 	M.c = M.r;
+	MallocForAll(&M.matr, M.r, M.c);*/
+	
 	//считвыание с консоли 
+	/*
 	JustScan(M);
-
+	*/
 	//считывание матрицы с файла 
 	/*
 	FscanMatr(fA, M);
 	*/
+	// для рандома 
+	srand(time(NULL));
+	M.r =1+ rand()%100;
+	M.c = M.r;
+	printf("порядок матрицы %d", M.c);
+	MallocForAll(&M.matr, M.r, M.c);
+	//заполнение матрици рандомром 
+	
+	Random(M);
+
 	//ее печать 
 	PrintMatr(M);
 }
