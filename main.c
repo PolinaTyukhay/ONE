@@ -19,6 +19,14 @@ void MallocForAll(int*** matr, int row, int col)
 	}
 
 }
+void FreeMemory(int*** matr, int* row) //освобождение памяти 
+{
+	for (int i = 0; i < row; i++)
+	{
+		free((*matr)[i]);
+	}
+	free(*matr);
+}
 int check(char* NameFile, int* cnt_c, int* cnt_r)
 {
 	FILE* st;
@@ -102,14 +110,15 @@ int ProblemWithMAtrix(Matrix m)
 		return (0);
 	}
 }
-void PrintMatr(Matrix p)
+void PrintMatr(int** matr, int r)// мжно ли сделать две скобки ?????
 {
-	for (int i = 0; i <p.r ; i++)
+	for (int i = 0; i <r ; i++)
 	{
+
 		printf("\n");
-		for (int j = 0; j < p.c; j++)
+		for (int j = 0; j < r; j++)
 		{
-			printf("%-3d ", p.matr[i][j]);
+			printf("%-3d ", matr[i][j]);
 		}
 	}
 }
@@ -144,6 +153,57 @@ void Random(Matrix r)
 		}
 	}
 }
+// Получение матрицы без i - й строки и j - го столбца
+void GetMatr(int** mas, int** p, int i, int j, int m)
+{
+	int ki, kj, di, dj;
+	di = 0;
+	for (ki = 0; ki < m - 1; ki++) { // проверка индекса строки
+		if (ki == i) di = 1;
+		dj = 0;
+		for (kj = 0; kj < m - 1; kj++) { // проверка индекса столбца
+			if (kj == j) dj = 1;
+			p[ki][kj] = mas[ki + di][kj + dj];
+		}
+	}
+}
+// Рекурсивное вычисление определителя
+int Determinant(int** mas, int m)
+{
+	int i, j, d, k, n;
+	int** newmatr;
+	MallocForAll(&newmatr, m,m);
+	j = 0;
+	d = 0;
+	k = 1; //(-1) в степени i
+	n = m - 1; // порадок матрици без столбца и срочки 
+	if (m < 1)
+	{
+		printf("вычислить определитьель невозможно");
+	}
+	if (m == 1)
+	{
+		d = mas[0][0];
+		return(d);
+	}
+	if (m == 2)
+	{
+		d = mas[0][0] * mas[1][1]-(mas[1][0] * mas[0][1]);
+		return(d);
+	}
+	if (m > 2)
+	{
+		for (i = 0; i < m; i++)
+		{
+			GetMatr(mas, newmatr, i, 0, m); 
+			/*printf("\n%d", mas[i][j]);
+			PrintMatr(newmatr, n);*/
+			d = d + k * mas[i][0] * Determinant(newmatr, n);
+			k = -k;
+		}
+	}
+	return(d);
+}
 
 int main()  
 {
@@ -173,6 +233,11 @@ int main()
 	/*int razm;
 	printf("введите порядок матрицы \n");
 	scanf_s("%d", &M.r);
+	if (M.r <= 0)
+	{
+		printf("это не матрица");
+		exit(1);
+	}
 	M.c = M.r;
 	MallocForAll(&M.matr, M.r, M.c);*/
 	
@@ -186,14 +251,20 @@ int main()
 	*/
 	// для рандома 
 	srand(time(NULL));
-	M.r =1+ rand()%100;
+	M.r =1+ rand()%10;
 	M.c = M.r;
 	printf("порядок матрицы %d", M.c);
 	MallocForAll(&M.matr, M.r, M.c);
 	//заполнение матрици рандомром 
 	
 	Random(M);
-
+	
 	//ее печать 
-	PrintMatr(M);
+	printf("\n");
+	PrintMatr(M.matr,M.r);
+	printf("\n");
+	int d;
+	d = Determinant(M.matr,M.r);
+	printf("\nопределитель матрицы равен :%d", d);
+	FreeMemory(&M.matr, M.r);
 }
