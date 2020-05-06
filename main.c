@@ -196,12 +196,11 @@ int Determinant(int** mas, int m)
 		for (i = 0; i < m; i++)
 		{
 			GetMatr(mas, newmatr, i, 0, m); 
-			/*printf("\n%d", mas[i][j]);
-			PrintMatr(newmatr, n);*/
 			d = d + k * mas[i][0] * Determinant(newmatr, n);
 			k = -k;
 		}
 	}
+	FreeMemory(&newmatr, m);
 	return(d);
 }
 
@@ -251,7 +250,7 @@ int main()
 	*/
 	// для рандома 
 	srand(time(NULL));
-	M.r =1+ rand()%10;
+	M.r = 1 + rand() % 10 ;
 	M.c = M.r;
 	printf("порядок матрицы %d", M.c);
 	MallocForAll(&M.matr, M.r, M.c);
@@ -263,7 +262,7 @@ int main()
 	printf("\n");
 	PrintMatr(M.matr,M.r);
 	printf("\n");
-	int d;
+    int d;
 	d = Determinant(M.matr,M.r);
 	printf("\nопределитель матрицы равен :%d", d);
 	FreeMemory(&M.matr, M.r);
