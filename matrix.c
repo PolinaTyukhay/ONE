@@ -41,11 +41,6 @@ int check(char* NameFile, int* cnt_c, int* cnt_r)
 
 		return 0;
 	}
-	if (fopen_s(&st, NameFile, "r") != 0)
-	{
-		printf("ошибка открытия файла %s: %d\n", NameFile, errno);
-		return 0;
-	}
 	do
 	{
 		sym = fgetc(st);// посимвольно считываем и прверяем
@@ -138,8 +133,10 @@ void JustScan(Matrix w)
 	for (int i = 0; i < w.r; i++)
 	{
 		printf("введите %d сточку матрицы\n", i + 1);
+		fseek(stdin, 0, SEEK_SET);
 		for (int j = 0; j < w.c; j++)
 		{
+			
 			scanf_s("%d", &w.matr[i][j]);
 		}
 	}

@@ -3,6 +3,7 @@
 #include <windows.h>
 #include <locale.h>
 #include <stdlib.h>
+#include <time.h>
 #include "matrix.h"
 
 /*typedef struct
@@ -216,64 +217,83 @@ void  FreeMemory(int*** matr, int row) //освобождение памяти
 int main()
 {
 	setlocale(LC_ALL, "rus");
-	int i, j;
-	int symA; //row строки col столбцы 
-	//проверяем ошибочки 
-	FILE* fA;
 	Matrix M;
 	M.c = 0;
 	M.r = 0;
-	//для работы с файлом
-	/*int res = check("A.txt", &M.c, &M.r);
-	if (res == 0)//поверка на ошибки при считывании по типу букв и тд
-	{
+	printf("для считывания матрицф из файла:1\nдля ввода данных с клавиатуры:2\nдля рандомной матрицы:3\n");
+	int des;
+
+	scanf_s("%d", &des);
+
+	printf("ввели:%d\n", des);
+	if (des == 1) {
+		int i, j;
+		int symA; //row строки col столбцы 
+		//проверяем ошибочки 
+		FILE* fA;
+		//для работы с файлом
+		int res = check("A.txt", &M.c, &M.r);
+		if (res == 0)//поверка на ошибки при считывании по типу букв и тд
+		{
+			exit(1);
+		}
+		fopen_s(&fA, "A.txt", "r");
+		printf("cnt_row: %d cnt_col:%d\n", M.r, M.c);//row строки col столбцы
+		int emp= ProblemWithMAtrix(M);//если в файле ничего или матрица не квадратная
+		if (emp == 0)
+		{
+			exit(1);
+		}
+		M.matr=MallocForAll(M.r, M.c);
+		//считывание матрицы с файла 
+
+		FscanMatr(fA, M);
+
+	}
+	else if (des == 2) {
+		//для ручного ввода 
+		int razm;
+		printf("введите порядок матрицы \n");
+		scanf_s("%d", &M.r);
+		if (M.r <= 0)
+		{
+			printf("это не квадратная  матрица");
+			exit(1);
+		}
+		M.c = M.r;
+		M.matr=MallocForAll(M.r, M.c);
+
+		//считвыание с консоли 
+		
+		JustScan(M);
+		
+	}
+	else if (des == 3) {
+		// для рандома 
+		srand(time(NULL));
+		//M.r = 1 + rand() % 16;
+		M.r = 11;
+		M.c = M.r;
+		printf("порядок матрицы %d", M.c);
+		M.matr = MallocForAll(M.r, M.c);
+		//заполнение матрици рандомром 
+
+		Random(M);
+	}
+	else {
+		printf("ПОВТОРЯЮ:\nдля считывания матрицф из файла:1\nдля ввода данных с клавиатуры:2\nдля рандомной матрицы:3\n");
 		exit(1);
 	}
-	fopen_s(&fA, "A.txt", "r");
-	printf("cnt_row: %d cnt_col:%d\n", M.r, M.c);//row строки col столбцы
-	int emp= ProblemWithMAtrix(M);//если в файле ничего или матрица не квадратная
-	if (emp == 0)
-	{
-		exit(1);
-	}
-	M.matr=MallocForAll(M.r, M.c);*/
-	//для ручного ввода 
-	/*int razm;
-	printf("введите порядок матрицы \n");
-	scanf_s("%d", &M.r);
-	if (M.r <= 0)
-	{
-		printf("это не матрица");
-		exit(1);
-	}
-	M.c = M.r;
-	M.matr=MallocForAll(M.r, M.c);*/
-
-	//считвыание с консоли 
-	/*
-	JustScan(M);
-	*/
-	//считывание матрицы с файла 
-	/*
-	FscanMatr(fA, M);
-	*/
-	// для рандома 
-	srand(time(NULL));
-	M.r = 1 + rand() % 16;
-	//M.r = 11;
-	M.c = M.r;
-	printf("порядок матрицы %d", M.c);
-	M.matr=MallocForAll(M.r, M.c);
-	//заполнение матрици рандомром 
-
-	Random(M);
-
 	//ее печать 
 	printf("\n");
 	PrintMatr(M.matr, M.r);
 	printf("\n");
+	time_t start, end;
 	long long d;
+	start = time(NULL);
 	d = Determinant(M.matr, M.r);
-	printf("\nопределитель матрицы равен :%d", d);
+	end = time(NULL);
+	printf("\nопределитель матрицы равен :%d\n", d);
+	printf("время затрачнное на вычисление: %0.1f", difftime(end, start));
 	FreeMemory(&M.matr, M.r);
 }
