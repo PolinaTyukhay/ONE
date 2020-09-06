@@ -3,18 +3,18 @@
 #include <windows.h>
 #include <locale.h>
 #include <stdlib.h>
-#include "matrix.h"
 
-/*typedef struct
+
+typedef struct
 {
 	int r;
 	int c;
 	int** matr;
-}Matrix;*/
+}Matrix;
 
-/*int ** MallocForAll(int row, int col)
+int** MallocForAll(int row, int col)
 {
-	int **matr = (int**)malloc(row * sizeof(int*));
+	int** matr = (int**)malloc(row * sizeof(int*));
 	for (int i = 0; i < row; i += 1) {
 		matr[i] = (int*)malloc(col * sizeof(int));
 	}
@@ -27,8 +27,8 @@ void  FreeMemory(int*** matr, int row) //освобождение памяти
 		free((*matr)[i]);
 	}
 	free(*matr);
-}*/
-/*int check(char* NameFile, int* cnt_c, int* cnt_r)
+}
+int check(char* NameFile, int* cnt_c, int* cnt_r)
 {
 	FILE* st;
 	int cnt_t = 0, tst = 0, sym;
@@ -97,8 +97,8 @@ void  FreeMemory(int*** matr, int row) //освобождение памяти
 	}
 	fclose(st);
 	return 1;
-}*/
-/*int ProblemWithMAtrix(Matrix m)
+}
+int ProblemWithMAtrix(Matrix m)
 {
 	if ((m.r == 0) && (m.c == 0))
 	{
@@ -110,8 +110,8 @@ void  FreeMemory(int*** matr, int row) //освобождение памяти
 		printf("Матрица не квадратная , невозможно найти оперделитель ");
 		return (0);
 	}
-}*/
-/*void PrintMatr(int** matr, int r)// мжно ли сделать две скобки ?????
+}
+void PrintMatr(int** matr, int r)// мжно ли сделать две скобки ?????
 {
 	for (int i = 0; i < r; i++)
 	{
@@ -122,8 +122,8 @@ void  FreeMemory(int*** matr, int row) //освобождение памяти
 			printf("%-3d ", matr[i][j]);
 		}
 	}
-}*/
-/*void FscanMatr(FILE* FF, Matrix k)
+}
+void FscanMatr(FILE* FF, Matrix k)
 {
 	for (int i = 0; i < k.r; i++)
 	{
@@ -132,8 +132,8 @@ void  FreeMemory(int*** matr, int row) //освобождение памяти
 			fscanf_s(FF, "%d\n", &k.matr[i][j]);
 		}
 	}
-}*/
-/*void JustScan(Matrix w)
+}
+void JustScan(Matrix w)
 {
 	for (int i = 0; i < w.r; i++)
 	{
@@ -143,8 +143,8 @@ void  FreeMemory(int*** matr, int row) //освобождение памяти
 			scanf_s("%d", &w.matr[i][j]);
 		}
 	}
-}*/
-/*void Random(Matrix r)
+}
+void Random(Matrix r)
 {
 	for (int i = 0; i < r.r; i++)
 	{
@@ -153,9 +153,9 @@ void  FreeMemory(int*** matr, int row) //освобождение памяти
 			r.matr[i][j] = 1 + rand() % 100;
 		}
 	}
-}*/
+}
 // Получение матрицы без i - й строки и j - го столбца
-/*void GetMatr(int** mas, int** p, int i, int j, int m)
+void GetMatr(int** mas, int** p, int i, int j, int m)
 {
 	int ki, kj, di, dj;
 	di = 0;
@@ -167,14 +167,14 @@ void  FreeMemory(int*** matr, int row) //освобождение памяти
 			p[ki][kj] = mas[ki + di][kj + dj];
 		}
 	}
-}*/
+}
 // Рекурсивное вычисление определителя
-/*int Determinant(int** mas, int m)
+int Determinant(int** mas, int m)
 {
 	long long d = 0;
 	int i, j, k, n;
 	//int** newmatr=MallocForAll(m, m);
-	
+
 	j = 0;
 	d = 0;
 	k = 1; //(-1) в степени i
@@ -203,77 +203,19 @@ void  FreeMemory(int*** matr, int row) //освобождение памяти
 			k = -k;
 		}
 
-		
+		/*for (int i = 0; i < m; i++)
+		{
+			free((newmatr)[i]);
+		}
+		free(newmatr);*/
 		FreeMemory(&newmatr, m);
 	}
 
-	
+	/*for (int i = 0; i < m; i++)
+	{
+		free((newmatr)[i]);
+	}
+	free(newmatr);*/
+	//FreeMemory(&newmatr, m);
 	return(d);
-}*/
-
-
-
-int main()
-{
-	setlocale(LC_ALL, "rus");
-	int i, j;
-	int symA; //row строки col столбцы 
-	//проверяем ошибочки 
-	FILE* fA;
-	Matrix M;
-	M.c = 0;
-	M.r = 0;
-	//для работы с файлом
-	/*int res = check("A.txt", &M.c, &M.r);
-	if (res == 0)//поверка на ошибки при считывании по типу букв и тд
-	{
-		exit(1);
-	}
-	fopen_s(&fA, "A.txt", "r");
-	printf("cnt_row: %d cnt_col:%d\n", M.r, M.c);//row строки col столбцы
-	int emp= ProblemWithMAtrix(M);//если в файле ничего или матрица не квадратная
-	if (emp == 0)
-	{
-		exit(1);
-	}
-	M.matr=MallocForAll(M.r, M.c);*/
-	//для ручного ввода 
-	/*int razm;
-	printf("введите порядок матрицы \n");
-	scanf_s("%d", &M.r);
-	if (M.r <= 0)
-	{
-		printf("это не матрица");
-		exit(1);
-	}
-	M.c = M.r;
-	M.matr=MallocForAll(M.r, M.c);*/
-
-	//считвыание с консоли 
-	/*
-	JustScan(M);
-	*/
-	//считывание матрицы с файла 
-	/*
-	FscanMatr(fA, M);
-	*/
-	// для рандома 
-	srand(time(NULL));
-	M.r = 1 + rand() % 16;
-	//M.r = 11;
-	M.c = M.r;
-	printf("порядок матрицы %d", M.c);
-	M.matr=MallocForAll(M.r, M.c);
-	//заполнение матрици рандомром 
-
-	Random(M);
-
-	//ее печать 
-	printf("\n");
-	PrintMatr(M.matr, M.r);
-	printf("\n");
-	long long d;
-	d = Determinant(M.matr, M.r);
-	printf("\nопределитель матрицы равен :%d", d);
-	FreeMemory(&M.matr, M.r);
 }
