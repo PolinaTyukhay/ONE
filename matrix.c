@@ -1,4 +1,4 @@
-#include <stdio.h>
+п»ї#include <stdio.h>
 #include <malloc.h>
 #include <windows.h>
 #include <locale.h>
@@ -20,7 +20,7 @@ int** MallocForAll(int row, int col)
 	}
 	return(matr);
 }
-void  FreeMemory(int*** matr, int row) //освобождение памяти 
+void  FreeMemory(int*** matr, int row) //РѕСЃРІРѕР±РѕР¶РґРµРЅРёРµ РїР°РјСЏС‚Рё 
 {
 	for (int i = 0; i < row; i++)
 	{
@@ -37,23 +37,23 @@ int check(char* NameFile, int* cnt_c, int* cnt_r)
 	errno_t err = fopen_s(&st, NameFile, "r");
 	if (err)
 	{
-		printf("проблемы с доступом к  %s: %d\n", NameFile, errno);
+		printf("РїСЂРѕР±Р»РµРјС‹ СЃ РґРѕСЃС‚СѓРїРѕРј Рє  %s: %d\n", NameFile, errno);
 
 		return 0;
 	}
 	do
 	{
-		sym = fgetc(st);// посимвольно считываем и прверяем
+		sym = fgetc(st);// РїРѕСЃРёРјРІРѕР»СЊРЅРѕ СЃС‡РёС‚С‹РІР°РµРј Рё РїСЂРІРµСЂСЏРµРј
 		if ((sym >= 'A') && (sym <= 'z') || (sym >= 128) && (sym <= 241))
 		{
-			printf("В файле %s присутствуют недопустимые символы\n", NameFile);
+			printf("Р’ С„Р°Р№Р»Рµ %s РїСЂРёСЃСѓС‚СЃС‚РІСѓСЋС‚ РЅРµРґРѕРїСѓСЃС‚РёРјС‹Рµ СЃРёРјРІРѕР»С‹\n", NameFile);
 			fclose(st);
 			return 0;
 		}
-		if (sym == '\n' && *cnt_c > 0)//считаем стрроки игнорируя переносы в начале файла 
+		if (sym == '\n' && *cnt_c > 0)//СЃС‡РёС‚Р°РµРј СЃС‚СЂСЂРѕРєРё РёРіРЅРѕСЂРёСЂСѓСЏ РїРµСЂРµРЅРѕСЃС‹ РІ РЅР°С‡Р°Р»Рµ С„Р°Р№Р»Р° 
 		{
-			*cnt_r = *cnt_r + 1;//счет строки
-			if (cnt_t > 0 && cnt_t != *cnt_c)//проверка на заполненость матрицы
+			*cnt_r = *cnt_r + 1;//СЃС‡РµС‚ СЃС‚СЂРѕРєРё
+			if (cnt_t > 0 && cnt_t != *cnt_c)//РїСЂРѕРІРµСЂРєР° РЅР° Р·Р°РїРѕР»РЅРµРЅРѕСЃС‚СЊ РјР°С‚СЂРёС†С‹
 			{
 				printf("Error: cnt col %d != %d\n", cnt_t, *cnt_c);
 				fclose(st);
@@ -65,16 +65,16 @@ int check(char* NameFile, int* cnt_c, int* cnt_r)
 			//printf("cnt_c: %d\n",cnt_c); 
 			*cnt_c = 0;
 		}
-		else if ((sym >= '0' && sym <= '9') || sym == '-' || sym == '+')//счет столбцов 
+		else if ((sym >= '0' && sym <= '9') || sym == '-' || sym == '+')//СЃС‡РµС‚ СЃС‚РѕР»Р±С†РѕРІ 
 		{
 			if (tst == 0)
 			{
 				tst = 1;
-				*cnt_c = *cnt_c + 1;//счет столбцов 
+				*cnt_c = *cnt_c + 1;//СЃС‡РµС‚ СЃС‚РѕР»Р±С†РѕРІ 
 			}
 			else if (sym == '-' || sym == '+')
 			{
-				printf("знак \"%c\" допускается только в начале числа  ", sym);
+				printf("Р·РЅР°Рє \"%c\" РґРѕРїСѓСЃРєР°РµС‚СЃСЏ С‚РѕР»СЊРєРѕ РІ РЅР°С‡Р°Р»Рµ С‡РёСЃР»Р°  ", sym);
 				fclose(st);
 				return 0;
 			}
@@ -97,16 +97,16 @@ int ProblemWithMAtrix(Matrix m)
 {
 	if ((m.r == 0) && (m.c == 0))
 	{
-		printf("Пустой файл");
+		printf("РџСѓСЃС‚РѕР№ С„Р°Р№Р»");
 		return (0);
 	}
 	if (m.r != m.c)
 	{
-		printf("Матрица не квадратная , невозможно найти оперделитель ");
+		printf("РњР°С‚СЂРёС†Р° РЅРµ РєРІР°РґСЂР°С‚РЅР°СЏ , РЅРµРІРѕР·РјРѕР¶РЅРѕ РЅР°Р№С‚Рё РѕРїРµСЂРґРµР»РёС‚РµР»СЊ ");
 		return (0);
 	}
 }
-void PrintMatr(int** matr, int r)// мжно ли сделать две скобки ?????
+void PrintMatr(int** matr, int r)
 {
 	for (int i = 0; i < r; i++)
 	{
@@ -116,6 +116,7 @@ void PrintMatr(int** matr, int r)// мжно ли сделать две скобки ?????
 		{
 			printf("%-3d ", matr[i][j]);
 		}
+		
 	}
 }
 void FscanMatr(FILE* FF, Matrix k)
@@ -132,7 +133,7 @@ void JustScan(Matrix w)
 {
 	for (int i = 0; i < w.r; i++)
 	{
-		printf("введите %d сточку матрицы\n", i + 1);
+		printf("РІРІРµРґРёС‚Рµ %d СЃС‚РѕС‡РєСѓ РјР°С‚СЂРёС†С‹\n", i + 1);
 		fseek(stdin, 0, SEEK_SET);
 		for (int j = 0; j < w.c; j++)
 		{
@@ -151,34 +152,36 @@ void Random(Matrix r)
 		}
 	}
 }
-// Получение матрицы без i - й строки и j - го столбца
+// РџРѕР»СѓС‡РµРЅРёРµ РјР°С‚СЂРёС†С‹ Р±РµР· i - Р№ СЃС‚СЂРѕРєРё Рё j - РіРѕ СЃС‚РѕР»Р±С†Р°
 void GetMatr(int** mas, int** p, int i, int j, int m)
 {
 	int ki, kj, di, dj;
 	di = 0;
-	for (ki = 0; ki < m - 1; ki++) { // проверка индекса строки
-		if (ki == i) di = 1;
+	for (ki = 0; ki < m - 1; ki++) { // РїСЂРѕРІРµСЂРєР° РёРЅРґРµРєСЃР° СЃС‚СЂРѕРєРё
+		if (ki == i) { 
+			di = 1;
+		}
 		dj = 0;
-		for (kj = 0; kj < m - 1; kj++) { // проверка индекса столбца
-			if (kj == j) dj = 1;
+		for (kj = 0; kj < m - 1; kj++) { // РїСЂРѕРІРµСЂРєР° РёРЅРґРµРєСЃР° СЃС‚РѕР»Р±С†Р°
+			if (kj == j) {
+				dj = 1; 
+			}
 			p[ki][kj] = mas[ki + di][kj + dj];
 		}
 	}
 }
-// Рекурсивное вычисление определителя
+// Р РµРєСѓСЂСЃРёРІРЅРѕРµ РІС‹С‡РёСЃР»РµРЅРёРµ РѕРїСЂРµРґРµР»РёС‚РµР»СЏ
 int Determinant(int** mas, int m)
 {
 	long long d = 0;
-	int i, j, k, n;
+	int i, k, n;
 	//int** newmatr=MallocForAll(m, m);
 
-	j = 0;
-	d = 0;
-	k = 1; //(-1) в степени i
-	n = m - 1; // порадок матрици без столбца и срочки 
+	k = 1; //(-1) РІ СЃС‚РµРїРµРЅРё i
+	n = m - 1; // РїРѕСЂР°РґРѕРє РјР°С‚СЂРёС†Рё Р±РµР· СЃС‚РѕР»Р±С†Р° Рё СЃСЂРѕС‡РєРё 
 	if (m < 1)
 	{
-		printf("вычислить определитьель невозможно");
+		printf("РІС‹С‡РёСЃР»РёС‚СЊ РѕРїСЂРµРґРµР»РёС‚СЊРµР»СЊ РЅРµРІРѕР·РјРѕР¶РЅРѕ");
 	}
 	else if (m == 1)
 	{
